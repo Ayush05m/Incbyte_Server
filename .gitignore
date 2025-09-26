@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+.env
+venv/
+ENV/
+.env.*
+
+# VS Code
+.vscode/
+
+# Docker
+*.log
+docker-compose.override.yml
+
+# Alembic
+alembic/versions/__pycache__/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test & Coverage
+.coverage
+htmlcov/
+*.cover
+*.py,cover
+
+# Misc
+*.sqlite3
+*.db
+
+# Node
+node_modules/
+
+# Ignore secrets
+secrets.json
+
+# Ignore build
+build/
+dist/
+*.egg-info/

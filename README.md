@@ -1,5 +1,7 @@
 # FastAPI Shop Backend
 
+This project is a backend for a shop built with FastAPI, PostgreSQL, and other modern technologies. It includes features like JWT authentication, password hashing, and asynchronous endpoints. The project is fully containerized with Docker for easy setup and deployment.
+
 ## Features
 - FastAPI framework
 - PostgreSQL with SQLAlchemy
@@ -8,52 +10,112 @@
 - Bcrypt password hashing
 - Async endpoints
 - Full TDD coverage (pytest, httpx)
+- Containerized with Docker
 - AI co-authorship (Claude, ChatGPT, Copilot, Dyad, Gemini, Grok)
 
-## Getting Started
+## Prerequisites
 
-1. Install dependencies (already installed in your environment):
-   - fastapi
-   - uvicorn[standard]
-   - sqlalchemy
-   - asyncpg
-   - alembic
-   - python-jose[cryptography]
-   - passlib[bcrypt]
-   - pytest
-   - httpx
+Before you begin, ensure you have [Docker](https://www.docker.com/get-started) installed on your system.
 
-2. Run the server:
+## Getting Started with Docker (Recommended)
 
-   ```powershell
-   uvicorn main:app --reload
-   ```
+This is the recommended way to run the application for both development and production.
 
-3. Alembic migration setup:
-   - Initialize Alembic: `alembic init alembic`
-   - Edit `alembic.ini` and `env.py` for your PostgreSQL connection
-   - Create migration: `alembic revision --autogenerate -m "Initial migration"`
-   - Apply migration: `alembic upgrade head`
+### 1. Environment Variables
 
-4. Environment variables:
-   - Set your PostgreSQL connection string and JWT secret in a `.env` file (to be created)
+Create a `.env` file in the root of the project and add the following environment variables. Replace the values with your actual database credentials and a strong secret key.
+
+```
+DATABASE_URL=postgresql+asyncpg://user:password@host/dbname
+SECRET_KEY=your-secret-key
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
+RAZORPAY_KEY_ID=your-key-id
+RAZORPAY_KEY_SECRET=your-key-secret
+```
+
+### 2. Running the Application
+
+With Docker and Docker Compose installed, you can start the application with a single command:
+
+```bash
+docker-compose up -d
+```
+
+This will build the Docker image and start the application container in detached mode. The application will be available at `http://localhost:8000`.
+
+### 3. Stopping the Application
+
+To stop the application, run:
+
+```bash
+docker-compose down
+```
+
+### 4. Viewing Logs
+
+To view the application logs, run:
+
+```bash
+docker-compose logs
+```
+
+## Manual Setup (for development)
+
+If you prefer to run the application without Docker, you can follow these steps.
+
+### 1. Installation
+
+1.  Clone the repository.
+2.  Create and activate a Python virtual environment.
+3.  Install the dependencies:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+### 2. Running the Server
+
+```bash
+uvicorn app.main:app --reload
+```
+
+### 3. Alembic Migrations
+
+-   Initialize Alembic: `alembic init alembic`
+-   Edit `alembic.ini` and `env.py` for your PostgreSQL connection.
+-   Create a migration: `alembic revision --autogenerate -m "Initial migration"`
+-   Apply the migration: `alembic upgrade head`
+
+### 4. Running Tests
+
+```bash
+$env:PYTHONPATH="<your_project_file_location>"; pytest app/tests/api/routes/
+```
+
+## Deployment to GCP
+
+This containerized application can be deployed to Google Cloud Platform (GCP) using several services:
+
+-   **Google Cloud Run:** A serverless platform that's easy to use and scales automatically.
+-   **Google Kubernetes Engine (GKE):** A managed Kubernetes service for orchestrating complex applications.
+-   **Google Compute Engine (GCE):** Provides virtual machines for maximum control.
+
+For detailed instructions on deploying to a specific service, please refer to the official GCP documentation.
 
 ## Project Structure
-- `main.py`: FastAPI entrypoint
-- `alembic/`: Alembic migrations (after init)
-- `app/`: Main backend code
-- `app/tests/api/routes/`: All async pytest tests
 
-## What I Did
-- Analyzed the project and decided the flow using Claude
-- Generated and structured the backend flow based on Claude's analysis
-- Used ChatGPT to generate the initial database schema, removed unnecessary fields, and added missing ones
-- Used Copilot for test case generation and README documentation
-- Built frontend pages using Dyad with Gemini API
-- Refactored backend routes, services, and frontend pages using Grok
-- Manually reviewed, edited, and integrated all AI-generated code and documentation
-- Ensured all features follow strict TDD (red-green-refactor)
-- Maintained high test coverage and clean code standards
+-   `Dockerfile`: Defines the Docker container for the application.
+-   `docker-compose.yml`: For managing the Docker container.
+-   `.dockerignore`: Specifies files to be excluded from the Docker image.
+-   `app/`: Main application code.
+-   `app/main.py`: FastAPI application entry point.
+-   `app/tests/`: Pytest tests.
+-   `alembic/`: Alembic database migrations.
+-   `requirements.txt`: Python dependencies.
 
 ## AI Usage & Co-Authorship
 - **Claude**: Project analysis, flow design, structure generation
@@ -61,38 +123,6 @@
 - **Copilot**: Test case generation, README documentation
 - **Dyad**: Frontend pages with Gemini API
 - **Grok**: Refactoring backend routes, services, and frontend pages
-
-- All features developed using strict TDD (red-green-refactor cycle)
-- Tests for every endpoint and feature
-- Commit messages include AI co-authorship
-
-## How to Run Tests
-1. Activate your Python virtual environment:
-   ```powershell
-   .\.venv\Scripts\activate
-   ```
-2. Install dependencies:
-   ```powershell
-   pip install -r requirements.txt
-   ```
-3. Set PYTHONPATH and run tests:
-   ```powershell
-   $env:PYTHONPATH="c:\Users\Ayush_Mishra\Desktop\Incubyte\shop-backend"; pytest app/tests/api/routes/
-   ```
-
-## AI Usage Documentation
-- All code, tests, and refactors were co-authored by AI (Claude, ChatGPT, Copilot, Dyad, Gemini, Grok)
-- README and test reports generated by AI
-- See commit history for co-authorship details
-
-## Test Report
-- All main features are covered by async pytest tests
-- See `app/tests/api/routes/` for test files
-- Run `pytest` for a full report
-
-## Public Repository
-- This project is ready for public release
-- All AI usage is documented
 
 ---
 **AI Co-Authors:** Claude, ChatGPT, GitHub Copilot, Dyad, Gemini, Grok
