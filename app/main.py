@@ -22,7 +22,8 @@ app = FastAPI(lifespan=lifespan) # Pass the lifespan context manager to FastAPI
 origins = [
     "http://localhost",
     "http://localhost:32100",
-    "https://sweetshop-incubyte.vercel.app"
+    "https://sweetshop-incubyte.vercel.app",
+    "https://incbyte.vercel.app"
 ]
 
 app.add_middleware(
